@@ -1,0 +1,47 @@
+{
+  "name": "@pichlex/haptic-lab",
+  "version": "0.1.0-alpha.1",
+  "description": "Experimental cross-platform web controls with native iPhone Safari haptic detents.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
+  "types": "./src/index.d.ts",
+  "scripts": {
+    "check": "node --check src/index.js && node --check site/app.js",
+    "test": "node --test",
+    "pack:dry-run": "npm pack --dry-run"
+  },
+  "keywords": [
+    "haptics",
+    "ios",
+    "safari",
+    "slider",
+    "dial",
+    "xy-pad",
+    "web-components"
+  ],
+  "author": "pichlex",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pichlex/haptic-lab.git"
+  },
+  "homepage": "https://pichlex.github.io/haptic-lab/",
+  "bugs": {
+    "url": "https://github.com/pichlex/haptic-lab/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

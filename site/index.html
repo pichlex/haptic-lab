@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0c">
+  <meta name="description" content="Haptic Lab — experimental web controls with native iPhone Safari feedback.">
+  <meta property="og:title" content="Haptic Lab">
+  <meta property="og:description" content="Cross-platform sliders, dials, toggles, buttons and a two-dimensional haptic field.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pichlex.github.io/haptic-lab/">
+  <link rel="canonical" href="https://pichlex.github.io/haptic-lab/">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <title>Haptic Lab</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./brand.css">
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="#top" aria-label="Haptic Lab, back to top">
+      <img class="brand-logo" src="../assets/logo.svg" alt="">
+      <span>Haptic Lab</span>
+    </a>
+    <div class="nav-actions">
+      <div class="nav-links">
+        <a href="#sliders">Sliders</a>
+        <a href="#controls">Controls</a>
+        <a href="#package">Package</a>
+      </div>
+      <a class="github-link" href="https://github.com/pichlex/haptic-lab" target="_blank" rel="noreferrer" aria-label="Open Haptic Lab on GitHub">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22c.57.1.77-.24.77-.54v-2.2c-3.14.68-3.8-1.34-3.8-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.03-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.72 2.64 1.22 3.29.93.1-.73.4-1.22.72-1.5-2.5-.29-5.14-1.25-5.14-5.58 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.44.11-3 0 0 .95-.3 3.1 1.16a10.7 10.7 0 0 1 5.64 0c2.16-1.46 3.1-1.16 3.1-1.16.62 1.56.23 2.71.12 3 .72.8 1.16 1.8 1.16 3.03 0 4.34-2.65 5.29-5.16 5.57.4.35.76 1.03.76 2.08v3.22c0 .3.2.65.78.54A11.3 11.3 0 0 0 12 .7Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow">Web controls with physical feedback</p>
+        <h1>Interfaces you can <em>feel.</em></h1>
+        <p class="hero-text">A small set of sliders, buttons, dials and two-dimensional controls. They work with a mouse or trackpad, while supported iPhones add a short tactile response.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#sliders">Try the controls</a>
+          <a class="button secondary" href="#package">View the package</a>
+        </div>
+      </div>
+      <div class="hero-preview">
+        <div class="preview-card">
+          <span class="preview-brand"><img src="../assets/logo.svg" alt="">Haptic Lab</span>
+          <strong>One action.<br>One short response.</strong>
+          <button class="preview-button haptic-tap" type="button">
+            Test feedback
+            <input class="native-overlay" type="checkbox" switch aria-label="Test haptic feedback">
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section id="sliders" class="section shell">
+      <div class="section-heading">
+        <h2>Three kinds of movement.</h2>
+        <p>Clear steps, dense adjustment and accented landmarks.</p>
+      </div>
+
+      <div class="stack">
+        <article class="card slider-card" data-slider="coarse">
+          <div class="card-heading">
+            <div><h3>Precise</h3><p>Measured ten-point steps for primary settings.</p></div>
+            <output class="value">50</output>
+          </div>
+          <div class="range-surface" tabindex="0">
+            <div class="range-track"></div><div class="range-fill"></div><div class="range-thumb"></div>
+            <div class="range-ticks"></div>
+            <input class="range-driver" type="checkbox" switch aria-label="Precise slider">
+          </div>
+        </article>
+
+        <article class="card slider-card" data-slider="dense">
+          <div class="card-heading">
+            <div><h3>Dense</h3><p>Fine-grained control for scrubbing and tuning.</p></div>
+            <output class="value">42</output>
+          </div>
+          <div class="range-surface" tabindex="0">
+            <div class="range-track"></div><div class="range-fill"></div><div class="range-thumb"></div>
+            <div class="range-ticks"></div>
+            <input class="range-driver" type="checkbox" switch aria-label="Dense slider">
+          </div>
+        </article>
+
+        <article class="card slider-card" data-slider="accent">
+          <div class="card-heading">
+            <div><h3>Accented</h3><p>Light steps with a clearer response at key values.</p></div>
+            <output class="value">35</output>
+          </div>
+          <div class="range-surface" tabindex="0">
+            <div class="range-track"></div><div class="range-fill accent"></div><div class="range-thumb"></div>
+            <div class="range-ticks"></div>
+            <input class="range-driver" type="checkbox" switch aria-label="Accented slider">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="controls" class="section shell">
+      <div class="section-heading">
+        <h2>Beyond the slider.</h2>
+        <p>The same interaction language across navigation, actions and spatial controls.</p>
+      </div>
+
+      <div class="control-grid">
+        <article class="card tabs-card">
+          <div class="card-heading compact"><div><h3>Tabs</h3><p>Quick navigation with a short response.</p></div></div>
+          <div class="tabs" role="tablist">
+            <span class="tab-indicator"></span>
+            <button class="tab is-active haptic-tap" role="tab" aria-selected="true">Overview<input class="native-overlay" type="checkbox" switch aria-label="Overview tab"></button>
+            <button class="tab haptic-tap" role="tab" aria-selected="false">Motion<input class="native-overlay" type="checkbox" switch aria-label="Motion tab"></button>
+            <button class="tab haptic-tap" role="tab" aria-selected="false">Feedback<input class="native-overlay" type="checkbox" switch aria-label="Feedback tab"></button>
+          </div>
+          <div class="tab-panel"><strong>One motion language</strong><p>Every control reacts quickly, then gets out of the way.</p></div>
+        </article>
+
+        <article class="card action-card">
+          <div class="card-heading compact"><div><h3>Button</h3><p>A direct action with a restrained spring.</p></div></div>
+          <button id="action-button" class="action-button haptic-tap" type="button">Launch pulse<input class="native-overlay" type="checkbox" switch aria-label="Launch pulse"></button>
+          <span id="action-count" class="action-count">0 actions</span>
+        </article>
+
+        <article class="card toggle-card">
+          <div class="card-heading compact"><div><h3>Toggle</h3><p>A magnetic switch with a calm transition between states.</p></div></div>
+          <div id="toggle" class="toggle" role="switch" aria-checked="false" tabindex="0">
+            <span class="toggle-track"><span class="toggle-glow"></span><span class="toggle-thumb"></span></span>
+            <input id="toggle-driver" class="native-overlay" type="checkbox" switch aria-label="Toggle ambience">
+          </div>
+          <strong id="toggle-label" class="toggle-label">Off</strong>
+        </article>
+
+        <article class="card dial-card">
+          <div class="card-heading compact"><div><h3>Dial</h3><p>Follow the arc around the centre.</p></div></div>
+          <div id="dial" class="dial" tabindex="0">
+            <div class="dial-ring"></div><div class="dial-pointer"></div>
+            <div class="dial-centre"><output>64</output><span>level</span></div>
+            <input class="dial-driver" type="checkbox" switch aria-label="Rotary dial">
+          </div>
+        </article>
+
+        <article class="card xy-card">
+          <div class="card-heading compact"><div><h3>Field</h3><p>Move freely in two dimensions and feel the grid.</p></div></div>
+          <div id="xy-pad" class="xy-pad" tabindex="0" role="application" aria-label="Two-dimensional haptic field">
+            <div class="xy-grid"></div><div class="xy-cell"></div>
+            <div class="xy-axis x"></div><div class="xy-axis y"></div>
+            <div class="xy-orb"><span></span></div>
+            <div class="xy-values"><b class="xy-x">52</b><small>X</small><b class="xy-y">54</b><small>Y</small></div>
+            <input class="xy-driver" type="checkbox" switch aria-label="Two-dimensional haptic field">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="package" class="section shell package-section">
+      <div class="package-card">
+        <div>
+          <h2>Package and demo are separate.</h2>
+          <p>The interaction engine lives in <code>src</code>. This page is a separate static demo that imports the package directly.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://github.com/pichlex/haptic-lab" target="_blank" rel="noreferrer">View on GitHub</a>
+            <a class="button secondary" href="https://github.com/pichlex/haptic-lab/tree/main/src" target="_blank" rel="noreferrer">Browse the API</a>
+          </div>
+        </div>
+        <pre><code>import {
+  HapticRange,
+  HapticDial,
+  HapticXYPad
+} from '@pichlex/haptic-lab';</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    <span>Haptic Lab · experimental web controls</span>
+    <a href="https://github.com/pichlex/haptic-lab" target="_blank" rel="noreferrer">github.com/pichlex/haptic-lab</a>
+  </footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

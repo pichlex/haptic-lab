@@ -1,0 +1,76 @@
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(95, 118, 255, .28);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.github-link {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  background: rgba(255,255,255,.035);
+  color: rgba(255,255,255,.82);
+  font-size: 12px;
+  font-weight: 720;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.github-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.065);
+}
+
+.github-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.preview-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(255,255,255,.72);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.preview-brand img {
+  width: 26px;
+  height: 26px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer a {
+  color: rgba(255,255,255,.72);
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .github-link span { display: none; }
+  .github-link { width: 40px; justify-content: center; padding: 0; }
+  .footer { align-items: flex-start; flex-direction: column; }
+}

@@ -1,0 +1,61 @@
+name: Bug report
+description: Report a reproducible interaction or compatibility problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. For haptic issues, physical-device details are essential.
+  - type: input
+    id: device
+    attributes:
+      label: Device and operating system
+      placeholder: iPhone 15 Pro, iOS 26.4 / MacBook Pro, macOS 16
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Safari 26.4
+    validations:
+      required: true
+  - type: dropdown
+    id: control
+    attributes:
+      label: Control
+      options:
+        - Range
+        - Dial
+        - XY field
+        - Button or tabs
+        - Toggle
+        - Package API
+        - Landing page
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Include gesture start position, direction, speed, and whether the issue appears on the first or later pass.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Screen recordings help, but also describe the physical haptic result in text.

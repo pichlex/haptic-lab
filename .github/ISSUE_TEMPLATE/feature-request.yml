@@ -1,0 +1,45 @@
+name: Feature request
+description: Propose a new control, adapter, API, or compatibility improvement
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What interaction problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API or behaviour
+      description: Include a short code example when the request affects package APIs.
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Core package
+        - Framework adapter
+        - Landing page or demo
+        - Browser compatibility
+        - Accessibility
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: principles
+    attributes:
+      label: Project principles
+      options:
+        - label: The proposal keeps haptics as progressive enhancement.
+          required: true
+        - label: The proposal preserves desktop pointer and keyboard behaviour.
+          required: true
