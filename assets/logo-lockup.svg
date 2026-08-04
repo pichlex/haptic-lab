@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 240" role="img" aria-labelledby="title desc">
+  <title id="title">Haptic Lab</title>
+  <desc id="desc">Haptic Lab wordmark with an H crossed by a tactile impulse.</desc>
+  <rect x="8" y="8" width="224" height="224" rx="52" fill="#111318"/>
+  <path d="M76 66v108M164 66v108" fill="none" stroke="#F7F4ED" stroke-width="28" stroke-linecap="round"/>
+  <path d="M54 120h49l12-29 24 58 15-29h40" fill="none" stroke="#FF6846" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="286" y="149" fill="#111318" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="94" font-weight="760" letter-spacing="-4">Haptic Lab</text>
+</svg>

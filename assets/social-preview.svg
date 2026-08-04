@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Haptic Lab</title>
+  <desc id="desc">Web controls with tactile detents on supported iPhones.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="#292C33"/></pattern>
+  </defs>
+  <rect width="1280" height="640" fill="#0D0F12"/>
+  <rect width="1280" height="640" fill="url(#grid)"/>
+  <rect x="96" y="112" width="300" height="300" rx="68" fill="#16191E" stroke="#343841" stroke-width="2"/>
+  <path d="M188 188v148M304 188v148" fill="none" stroke="#F7F4ED" stroke-width="38" stroke-linecap="round"/>
+  <path d="M158 262h67l17-40 34 80 21-40h42" fill="none" stroke="#FF6846" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="480" y="264" fill="#F7F4ED" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="102" font-weight="760" letter-spacing="-6">Haptic Lab</text>
+  <text x="486" y="336" fill="#A7AAB1" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="29">Web controls with tactile detents.</text>
+  <rect x="486" y="382" width="332" height="58" rx="29" fill="#FF6846"/>
+  <text x="522" y="419" fill="#111318" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700">github.com/pichlex/haptic-lab</text>
+  <path d="M0 548h1280" stroke="#343841" stroke-width="2"/>
+  <text x="96" y="592" fill="#777B84" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">RANGE / DIAL / XY PAD / TAP / TOGGLE</text>
+</svg>

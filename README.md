@@ -26,57 +26,48 @@
 
 ---
 
-## What it is
+## Why Haptic Lab
 
-Haptic Lab explores a browser-only technique for building custom controls around a real, rendered Safari HTML switch. On supported iPhones, the physical gesture remains trusted and WebKit produces the system haptic tick. On desktop browsers, the same controls use ordinary Pointer Events and keyboard input without pretending that physical haptics exist.
+Haptic Lab explores a browser-only technique that positions a real Safari HTML switch beneath a custom control. The physical gesture stays trusted; on supported iPhones, WebKit may produce its native switch tick as the user crosses a detent. Other browsers receive the same interaction and visual response without a false claim of physical feedback.
 
-The reusable package and the landing page are separate:
+The package and product site remain intentionally separate:
 
 ```text
-src/     reusable interaction primitives
-test/    unit tests for geometry and utilities
-site/    English landing page and component gallery
+src/   reusable interaction primitives
+site/  English landing page and interactive gallery
 ```
 
-The site imports `src/index.js` directly; it does not ship a duplicate engine.
+The site imports `src/index.js` directly. There is no second copy of the engine.
 
-## Live controls
+## Installation
 
-| Primitive | Behaviour |
-|---|---|
-| `HapticRange` | Linear slider with configurable steps and accented detents |
-| `HapticDial` | True angle-following rotary control |
-| `HapticXYPad` | Two-dimensional grid surface with X/Y crossings |
-| `bindHapticTap` | Direct-touch helper for buttons and tabs |
-| `bindHapticToggle` | Direct-touch helper for custom toggle surfaces |
-
-See all of them at **[pichlex.github.io/haptic-lab](https://pichlex.github.io/haptic-lab/)**.
-
-## Install
-
-The package is currently an alpha and is not published to npm yet. Install it directly from GitHub:
+The package is pre-release software and is **not published to npm**. Install the current GitHub source:
 
 ```bash
 npm install github:pichlex/haptic-lab#main
 ```
 
-```js
-import {
-  HapticDial,
-  HapticRange,
-  HapticXYPad,
-  bindHapticTap,
-  bindHapticToggle,
-} from '@pichlex/haptic-lab';
+Or clone it for local development:
+
+```bash
+git clone https://github.com/pichlex/haptic-lab.git
+cd haptic-lab
+npm install
 ```
 
-### Minimal range example
+The module is ESM-only and requires Node.js 18 or newer for its development scripts.
+
+## Usage
+
+Every visual surface needs a transparent, rendered switch input. The package controls interaction only; the host application owns presentation.
+
+### Range
 
 ```html
-<div id="surface" class="range-surface">
-  <div class="track"></div>
+<div id="volume" class="range" tabindex="0">
+  <div class="fill"></div>
   <div class="thumb"></div>
-  <input id="driver" type="checkbox" switch>
+  <input id="volume-driver" type="checkbox" switch>
 </div>
 ```
 
@@ -84,28 +75,139 @@ import {
 import { HapticRange } from '@pichlex/haptic-lab';
 
 const range = new HapticRange({
-  surface: document.querySelector('#surface'),
-  driver: document.querySelector('#driver'),
+  surface: document.querySelector('#volume'),
+  driver: document.querySelector('#volume-driver'),
   min: 0,
   max: 100,
   step: 10,
   value: 50,
+  isMajor: (value) => value % 20 === 0,
   onValue: ({ value, ratio }) => {
+    document.querySelector('.fill').style.width = `${ratio * 100}%`;
     document.querySelector('.thumb').style.left = `${ratio * 100}%`;
     console.log(value);
   },
+  onTick: ({ value, kind, native }) => {
+    console.log({ value, kind, native });
+  },
+});
+
+// Update from application state, then dispose when the view unmounts.
+range.setValue(70);
+range.destroy();
+```
+
+### Dial and XY pad
+
+```js
+import { HapticDial, HapticXYPad } from '@pichlex/haptic-lab';
+
+const dial = new HapticDial({
+  surface: document.querySelector('#dial'),
+  driver: document.querySelector('#dial-driver'),
+  min: 0,
+  max: 100,
+  step: 5,
+  onValue: ({ value, ratio }) => renderDial(value, ratio),
+});
+
+const pad = new HapticXYPad({
+  surface: document.querySelector('#pad'),
+  driver: document.querySelector('#pad-driver'),
+  columns: 10,
+  rows: 8,
+  onValue: ({ x, y, cellX, cellY }) => renderCursor(x, y, cellX, cellY),
 });
 ```
 
-## Browser behaviour
+### Tap and toggle bindings
 
-| Platform | Interaction | Physical feedback |
+```js
+import { bindHapticTap, bindHapticToggle } from '@pichlex/haptic-lab';
+
+const unbindTap = bindHapticTap(document.querySelector('#button-driver'), () => {
+  runAction();
+});
+
+const unbindToggle = bindHapticToggle(
+  document.querySelector('#toggle-driver'),
+  ({ checked }) => renderToggle(checked),
+);
+
+// Later:
+unbindTap();
+unbindToggle();
+```
+
+## Browser support
+
+| Platform | Input path | Physical feedback |
 |---|---|---|
-| iPhone Safari / iOS WebKit | Touch, drag, direction changes | Experimental native system ticks |
-| macOS Safari, Chrome, Firefox | Mouse, trackpad, keyboard | Visual detents only |
-| Android browsers | Touch and pointer fallback | Optional `navigator.vibrate()` can be added by the host app |
+| iPhone Safari / iOS WebKit | Native touch gesture over a rendered switch | Experimental system tick where supported |
+| Safari, Chrome, Edge, Firefox on desktop | Pointer Events and keyboard | Visual detents only |
+| Android browsers | Touch and pointer fallback | None built in |
 
-The haptic path relies on current WebKit implementation details. Treat it as progressive enhancement, not as a guaranteed web-platform API.
+Haptics are progressive enhancement. No control requires them to remain usable.
+
+## API reference
+
+### Exports
+
+| Export | Purpose |
+|---|---|
+| `HapticRange` | Linear stepped control with minor/major detents |
+| `HapticDial` | Angle-following rotary control |
+| `HapticXYPad` | Two-dimensional grid control |
+| `bindHapticTap` | Change listener for direct-action switch overlays |
+| `bindHapticToggle` | Stateful switch binding; emits initial state immediately |
+| `clamp`, `quantize`, `gridCell`, `angleToRatio` | Deterministic geometry helpers |
+| `isTouchCapable`, `isFinePointer` | Input capability helpers |
+
+TypeScript declarations are included in `src/index.d.ts`.
+
+### `new HapticRange(options)`
+
+Required options are `surface: HTMLElement` and `driver: HTMLInputElement`.
+
+| Option | Default | Notes |
+|---|---:|---|
+| `min`, `max` | `0`, `100` | Numeric bounds |
+| `step` | `10` | Detent interval |
+| `value` | `50` | Initial value |
+| `trackInset` | `14` | Horizontal inset in CSS pixels |
+| `firstArmMs` | `228` | Delay before the native path is armed |
+| `accentOffset` | `0` | Offset used by accented detent behaviour |
+| `isMajor(value)` | `() => false` | Classifies strong detents |
+| `pointToValue(context)` | linear mapping | Optional custom geometry |
+| `xForValue(context)` | linear mapping | Optional value-to-position mapping |
+| `onValue(event)` | no-op | Receives `{ value, ratio, animate }` |
+| `onTick(event)` | no-op | Receives value, kind, phase, direction, and native status |
+
+Methods: `setValue(value)` and `destroy()`. Current state is available as `currentValue`.
+
+### `new HapticDial(options)`
+
+Requires `surface` and `driver`. Supports `min`, `max`, `step`, `value`, `firstArmMs`, `isMajor`, `onValue`, and `onTick`, plus `arcStart` (`-135`) and `arcEnd` (`135`). Methods: `setValue(value)` and `destroy()`. Current state is available as `value`.
+
+### `new HapticXYPad(options)`
+
+Requires `surface` and `driver`. Options include `columns` (`10`), `rows` (`8`), `x` (`52`), `y` (`46`), `firstArmMs`, `onValue`, and `onTick`. `onValue` receives normalized ratios and grid cells; `onTick` reports crossed axes, input source, and native status. Method: `destroy()`. Current coordinates are available as `x` and `y`.
+
+### Binding helpers
+
+`bindHapticTap(input, callback)` and `bindHapticToggle(input, callback)` both return an unsubscribe function. The callback receives `{ event, checked }`.
+
+## Project structure
+
+```text
+.
+├── assets/                 brand, banner, and social preview assets
+├── site/                   static landing page and component gallery
+├── src/                    publishable package source and declarations
+├── test/                   Node unit tests
+├── .github/ISSUE_TEMPLATE/ structured bug and feature forms
+└── .github/workflows/      CI, Pages, and production deployment workflows
+```
 
 ## Development
 
@@ -113,57 +215,35 @@ The haptic path relies on current WebKit implementation details. Treat it as pro
 npm install
 npm test
 npm run check
-npm run pack:dry-run
-```
-
-Serve the repository root with any static file server and open `/site/`.
-
-```bash
+npm pack --dry-run
 python3 -m http.server 8080
-# http://localhost:8080/site/
 ```
 
-## Public API
+Open `http://localhost:8080/site/`.
 
-```js
-export {
-  HapticRange,
-  HapticDial,
-  HapticXYPad,
-  bindHapticTap,
-  bindHapticToggle,
-};
-```
+## Limitations
 
-Type declarations are included through `src/index.d.ts`.
+- The native haptic path depends on current WebKit implementation details, not a standardized Haptics API.
+- Physical feedback varies by iPhone model, iOS/WebKit version, gesture origin, and input conditions.
+- Desktop and Android paths intentionally provide visual feedback only.
+- The API is alpha and may change before `1.0.0`.
+- Browser-level accessibility and VoiceOver coverage are not complete.
+- The package supplies interaction primitives, not styled components or framework adapters.
 
-## Release status
+## Roadmap
 
-Current version: **`0.1.0-alpha.1`**.
+- Publish a device/OS/WebKit validation matrix.
+- Freeze constructor options and callback payloads.
+- Add browser-level pointer, touch, keyboard, and accessibility tests.
+- Complete VoiceOver and screen-reader review.
+- Add provenance-enabled npm publishing after the alpha stabilizes.
+- Explore framework adapters without adding dependencies to the core.
 
-Already included:
-
-- ESM package exports
-- TypeScript declarations
-- unit tests and CI
-- desktop pointer and keyboard fallbacks
-- English component gallery
-- GitHub Pages workflow
-- MIT license
-
-Before a stable release:
-
-- document a physical iPhone and iOS/WebKit test matrix
-- freeze constructor options and callback payloads
-- add browser-level pointer, touch, keyboard, and accessibility tests
-- complete VoiceOver and screen-reader review
-- add trusted npm publishing with provenance
-
-The detailed plan lives in [`ROADMAP.md`](./ROADMAP.md).
+See [`ROADMAP.md`](./ROADMAP.md) and [`CHANGELOG.md`](./CHANGELOG.md) for details.
 
 ## Contributing
 
-Bug reports, device observations, and API proposals are welcome. Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) before opening a pull request.
+Bug reports, physical-device observations, documentation improvements, and focused API proposals are welcome. Read [`CONTRIBUTING.md`](./CONTRIBUTING.md), use the structured issue forms, and keep package code in `src/` and demo code in `site/`.
 
 ## License
 
